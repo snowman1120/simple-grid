@@ -1,16 +1,15 @@
 package com.example.application.data.service;
 
+import java.util.UUID;
+
 import com.example.application.data.entity.SamplePerson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.artur.helpers.CrudService;
-import com.vaadin.fusion.Nonnull;
-import javax.validation.constraints.Email;
-import java.time.LocalDate;
 
 @Service
-public class SamplePersonService extends CrudService<SamplePerson, Integer> {
+public class SamplePersonService extends CrudService<SamplePerson, UUID> {
 
     private SamplePersonRepository repository;
 

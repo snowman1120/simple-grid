@@ -2,6 +2,7 @@ package com.example.application.data.endpoint;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.example.application.data.entity.SamplePerson;
 import com.example.application.data.service.SamplePersonService;
@@ -29,7 +30,7 @@ public class SamplePersonEndpoint {
         return page.getContent();
     }
 
-    public Optional<SamplePerson> get(@Nonnull Integer id) {
+    public Optional<SamplePerson> get(@Nonnull UUID id) {
         return service.get(id);
     }
 
@@ -38,7 +39,7 @@ public class SamplePersonEndpoint {
         return service.update(entity);
     }
 
-    public void delete(@Nonnull Integer id) {
+    public void delete(@Nonnull UUID id) {
         service.delete(id);
     }
 
