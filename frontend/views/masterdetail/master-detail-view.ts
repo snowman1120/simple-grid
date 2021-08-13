@@ -17,6 +17,8 @@ import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-upload';
 import SamplePerson from 'Frontend/generated/com/example/application/data/entity/SamplePerson';
 import SamplePersonModel from 'Frontend/generated/com/example/application/data/entity/SamplePersonModel';
+import SortDTO from 'Frontend/generated/com/vaadin/fusion/SortDTO';
+import Direction from 'Frontend/generated/org/springframework/data/domain/Sort/Direction';
 import * as SamplePersonEndpoint from 'Frontend/generated/SamplePersonEndpoint';
 import { html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
@@ -113,11 +115,22 @@ export class MasterDetailView extends View {
 
   private async getGridData(
     params: GridDataProviderParams<SamplePerson>,
-    callback: GridDataProviderCallback<SamplePerson | undefined>
+    callback: GridDataProviderCallback<SamplePerson>
   ) {
-    const index = params.page * params.pageSize;
-    const data = await SamplePersonEndpoint.list(index, params.pageSize, params.sortOrders as any);
-    callback(data ?? []);
+    const sort: SortDTO = {
+      orders: params.sortOrders.map((order) => ({
+        property: order.path,
+        direction: order.direction == 'asc' ? Direction.ASC : Direction.DESC,
+        ignoreCase: false,
+      })),
+    };
+    const data: Array<SamplePerson> = (await SamplePersonEndpoint.list({
+      pageNumber: params.page,
+      pageSize: params.pageSize,
+      sort: sort,
+    })) as any;
+
+    callback(data);
   }
 
   async connectedCallback() {

@@ -1,22 +1,17 @@
 package com.example.application.data.endpoint;
 
-import com.example.application.data.entity.SamplePerson;
-import com.example.application.data.service.SamplePersonService;
-
 import java.util.List;
 import java.util.Optional;
 
-import com.vaadin.fusion.Endpoint;
-
-import org.vaadin.artur.helpers.GridSorter;
-import org.springframework.data.domain.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.artur.helpers.PagingUtil;
-
-import com.vaadin.fusion.Nonnull;
-import javax.validation.constraints.Email;
-import java.time.LocalDate;
+import com.example.application.data.entity.SamplePerson;
+import com.example.application.data.service.SamplePersonService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.fusion.Endpoint;
+import com.vaadin.fusion.Nonnull;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Endpoint
 @AnonymousAllowed
@@ -29,9 +24,8 @@ public class SamplePersonEndpoint {
     }
 
     @Nonnull
-    public List<@Nonnull SamplePerson> list(int offset, int limit, @Nonnull List<@Nonnull GridSorter> sortOrder) {
-        Page<SamplePerson> page = service
-                .list(PagingUtil.offsetLimitTypeScriptSortOrdersToPageable(offset, limit, sortOrder));
+    public List<@Nonnull SamplePerson> list(Pageable pageable) {
+        Page<SamplePerson> page = service.list(pageable);
         return page.getContent();
     }
 

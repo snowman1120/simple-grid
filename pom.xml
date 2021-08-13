@@ -11,7 +11,7 @@
 
     <properties>
         <java.version>16</java.version>
-        <vaadin.version>21.0.0.beta2</vaadin.version>
+        <vaadin.version>22.0-SNAPSHOT</vaadin.version>
     </properties>
 
     <parent>
